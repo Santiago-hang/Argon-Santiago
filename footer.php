@@ -52,10 +52,10 @@
 
 						<div class="footer-filing-info" style="margin-bottom: 12px; font-size: 12.5px; display: flex; flex-wrap: wrap; justify-content: center; gap: 10px;">
 							<span style="background: rgba(127,127,127,0.06); border: 1px solid rgba(127,127,127,0.1); padding: 3px 10px; border-radius: 6px; display: inline-flex; align-items: center;">
-								🇨🇳 <a href="https://beian.miit.gov.cn/" target="_blank" style="color: inherit; text-decoration: none; margin-left: 6px;">京ICP备XXXX号-1</a>
+								🇨🇳 <a href="https://beian.miit.gov.cn/" target="_blank" style="color: inherit; text-decoration: none; margin-left: 6px;">京ICP备2026027561号-1</a>
 							</span>
 							<span style="background: rgba(127,127,127,0.06); border: 1px solid rgba(127,127,127,0.1); padding: 3px 10px; border-radius: 6px; display: inline-flex; align-items: center;">
-								🛡️ <a href="http://www.beian.gov.cn/portal/recordQuery" target="_blank" style="color: inherit; text-decoration: none; margin-left: 6px;">京公网安备XXXX号</a>
+								🛡️ <a href="http://www.beian.gov.cn/portal/recordQuery" target="_blank" style="color: inherit; text-decoration: none; margin-left: 6px;">京公网安备11010602202617号</a>
 							</span>
 						</div>
 
