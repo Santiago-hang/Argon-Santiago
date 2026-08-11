@@ -255,12 +255,13 @@
 <?php echo get_option('argon_custom_html_head'); ?>
 
 <style id="custom_cursor_css">
-	* {
+	html, body {
 		cursor: url('<?php echo $GLOBALS['assets_path']; ?>/assets/arrow.cur'), auto;
 	}
 	a, button, input[type="submit"], input[type="button"], input[type="reset"], [onclick],
 	.page-link, .fa, .navbar-toggler, .fabtn, .leftbar-menu-item,
-	.post-index-item, .dropdown-item, .nav-link, .btn {
+	.post-index-item, .dropdown-item, .nav-link, .btn,
+	a *, button *, [onclick] * {
 		cursor: url('<?php echo $GLOBALS['assets_path']; ?>/assets/link.cur'), pointer;
 	}
 </style>
