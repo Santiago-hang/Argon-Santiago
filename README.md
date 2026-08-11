@@ -34,6 +34,6 @@
 
 ### [v1.0.0] - 2026-08-11 (基线版本)
 - **首次重构发布**：完成了从原版 Argon 到 `Argon-Santiago` 的完整适配与优化。
-- 详细变动清单与完整对比报告，请参阅：[v1.0.0 Release Notes](../../releases/tag/v1.0.0) 或 [博客详细对比页面](https://yourdomain.com/argon-diff)。
+- 详细变动清单与完整对比报告，请参阅：[v1.0.0 Release Notes](../../releases/tag/v1.0.0) 。
 
 > 💡 *后续版本演进将基于 `v1.0.0` 进行增量记录，详见 [Releases](../../releases) 页面。*
