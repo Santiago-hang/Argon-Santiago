@@ -30,6 +30,44 @@
 
 ## 📅 版本更新日志 (Changelog)
 
+### 🚀 [v1.0.2] - 2026-08-17
+
+### 🐛 修复
+
+<details>
+<summary><b>修复</b>：parsedown.php —— 动态属性弃用（PHP 8.2 起 E_DEPRECATED，PHP 9.0 致命错误）。</summary>
+
+- `class _Parsedown` 声明上方新增一行 `#[AllowDynamicProperties]`。
+- 原因：该类未声明属性，但代码中直接给 `$this->DefinitionData`、`$this->breaksEnabled`、`$this->markupEscaped`、`$this->urlsLinked`、`$this->safeMode`、`$this->strictMode` 赋值，属动态属性写法。
+
+</details>
+
+<details>
+<summary><b>修复</b>：隐式 nullable 参数 → 显式 <code>?</code> 类型声明（共 7 处，PHP 8.4 起 E_DEPRECATED）。</summary>
+
+| 文件 | 函数 | 修改前 | 修改后 |
+|---|---|---|---|
+| parsedown.php | `blockCode()` | `$Block = null` | `?array $Block = null` |
+| parsedown.php | `blockList()` | `array $CurrentBlock = null` | `?array $CurrentBlock = null` |
+| parsedown.php | `blockSetextHeader()` | `array $Block = null` | `?array $Block = null` |
+| parsedown.php | `blockTable()` | `array $Block = null` | `?array $Block = null` |
+| functions.php | `argon_get_visitor_ua_display()` | `$userAgent = null` | `?string $userAgent = null` |
+| functions.php | `get_avatar_by_qqnumber()` | `$comment_or_email = null` | `mixed $comment_or_email = null` |
+| useragent-parser.php | `argon_parse_user_agent()` | `$u_agent = null` | `?string $u_agent = null` |
+
+说明：`get_avatar_by_qqnumber` 的第二参数实际会收到对象/数字/字符串多种类型，故用 `mixed` 而非 `?string`；其余参数调用方只传字符串/数组或 null，类型安全。
+
+</details>
+
+<details>
+<summary><b>修复</b>：functions.php —— 删除过时的 WordPress 版本检查。</summary>
+
+- 删除了 `version_compare($GLOBALS['wp_version'], '4.4-alpha', '<')` 的检查及其输出（WP 4.4 为 2015 年版本，当前已形同虚设的死代码）。
+
+</details>
+
+---
+
 ### 🚀 [v1.0.1] - 2026-08-11
 
 #### 🐛 修复
