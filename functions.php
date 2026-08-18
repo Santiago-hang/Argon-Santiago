@@ -1174,7 +1174,7 @@ function argon_comment_format($comment, $args, $depth){
 	<li class="comment-divider"></li>
 	<li>
 <?php }}
-//评论样式格式化 (说说预览界面)
+//评论样式格式化 (碎语预览界面)
 function argon_comment_shuoshuo_preview_format($comment, $args, $depth){
 	$GLOBALS['comment'] = $comment;?>
 	<li class="comment-item" id="comment-<?php comment_ID(); ?>">
@@ -2045,7 +2045,7 @@ function text_gravatar($url){
 if (get_option('argon_text_gravatar', 'false') == 'true' && !is_admin()){
 	add_filter('get_avatar_url', 'text_gravatar');
 }
-//说说点赞
+//碎语点赞
 function get_shuoshuo_upvotes($ID){
 	$count_key = 'upvotes';
 	$count = get_post_meta($ID, $count_key, true);
@@ -2076,7 +2076,7 @@ function upvote_shuoshuo(){
 	if (in_array($ID, explode(',', $upvotedList))){
 		exit(json_encode(array(
 			'status' => 'failed',
-			'msg' => __('该说说已被赞过', 'argon'),
+			'msg' => __('该碎语已被赞过', 'argon'),
 			'total_upvote' => get_shuoshuo_upvotes($ID)
 		)));
 	}
@@ -2429,7 +2429,7 @@ function update_post_meta_ajax(){
 }
 add_action('wp_ajax_update_post_meta_ajax' , 'update_post_meta_ajax');
 // 移除 nopriv 钩子 —— 未登录用户不应修改文章 meta
-//首页显示说说
+//首页显示碎语
 function argon_home_add_post_type_shuoshuo($query){
 	if (is_home() && $query -> is_main_query()){
 		$query -> set('post_type', array('post', 'shuoshuo'));
@@ -3212,22 +3212,22 @@ function init_nav_menus(){
 //隐藏 admin 管理条
 //show_admin_bar(false);
 
-/*说说*/
+/*碎语*/
 add_action('init', 'init_shuoshuo');
 function init_shuoshuo(){
 	$labels = array(
-		'name' => __('说说', 'argon'),
-		'singular_name' => __('说说', 'argon'),
-		'add_new' => __('发表说说', 'argon'),
-		'add_new_item' => __('发表说说', 'argon'),
-		'edit_item' => __('编辑说说', 'argon'),
-		'new_item' => __('新说说', 'argon'),
-		'view_item' => __('查看说说', 'argon'),
-		'search_items' => __('搜索说说', 'argon'),
-		'not_found' => __('暂无说说', 'argon'),
-		'not_found_in_trash' => __('没有已遗弃的说说', 'argon'),
+		'name' => __('碎语', 'argon'),
+		'singular_name' => __('碎语', 'argon'),
+		'add_new' => __('发表碎语', 'argon'),
+		'add_new_item' => __('发表碎语', 'argon'),
+		'edit_item' => __('编辑碎语', 'argon'),
+		'new_item' => __('新碎语', 'argon'),
+		'view_item' => __('查看碎语', 'argon'),
+		'search_items' => __('搜索碎语', 'argon'),
+		'not_found' => __('暂无碎语', 'argon'),
+		'not_found_in_trash' => __('没有已遗弃的碎语', 'argon'),
 		'parent_item_colon' => '',
-		'menu_name' => __('说说', 'argon')
+		'menu_name' => __('碎语', 'argon')
 	);
 	$args = array(
 		'labels' => $labels,
@@ -3238,7 +3238,7 @@ function init_shuoshuo(){
 		'exclude_from_search' => true,
 		'query_var' => true,
 		'rewrite' => array(
-			'slug' => 'shuoshuo',
+			'slug' => 'moment',
 			'with_front' => false
 		),
 		'capability_type' => 'post',
