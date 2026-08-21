@@ -2,6 +2,7 @@
 						<?php
 							echo get_option('argon_footer_html');
 							
+							if (get_option('argon_footer_show_visitorinfo', 'true') != 'false') {
 							$visitor_ip = argon_get_visitor_ip();
 							$display_ip = $visitor_ip;
 							if (strpos($display_ip, ':') !== false) {
@@ -18,18 +19,31 @@
 
 							$visitor_ip_loc = argon_get_cached_ip_location($visitor_ip);
 							$footer_ip_loc_async = ($visitor_ip_loc === null);
+							}
 						?>
 						
-						<div class="footer-uptime" style="margin-bottom: 8px; font-size: 12.5px; display: flex; flex-wrap: wrap; justify-content: center; gap: 8px;">
+												<?php
+						$show_runtime = get_option('argon_footer_show_runtime', 'true') != 'false';
+						$show_visitor = get_option('argon_footer_show_visitor', 'true') != 'false';
+						if ($show_runtime || $show_visitor) {
+						?>
+<div class="footer-uptime" style="margin-bottom: 8px; font-size: 12.5px; display: flex; flex-wrap: wrap; justify-content: center; gap: 8px;">
+							<?php if ($show_runtime) { ?>
 							<span style="background: rgba(127,127,127,0.06); border: 1px solid rgba(127,127,127,0.1); padding: 3px 12px; border-radius: 12px; display: inline-block;">
 								⏱️ 本站已稳定运行：<span id="web_runtime" style="font-family: monospace; font-weight: 600;">载入中...</span>
 							</span>
+							<?php } ?>
+							<?php if ($show_visitor) { ?>
 							<span style="background: rgba(127,127,127,0.06); border: 1px solid rgba(127,127,127,0.1); padding: 3px 12px; border-radius: 12px; display: inline-flex; align-items: center;">
 								👥访客 <?php $stats = argon_get_visitor_stats(); echo number_format($stats['total_visitors']); ?>&nbsp;&nbsp;&nbsp;📊访问 <?php echo number_format($stats['total_views']); ?>
 							</span>
+							<?php } ?>
 						</div>
+<?php } ?>
 
-						<div class="footer-visitor-info">
+
+						<?php if (get_option('argon_footer_show_visitorinfo', 'true') != 'false') { ?>
+<div class="footer-visitor-info">
 							<span class="footer-visitor-badge comment-useragent">
 								<?php echo $os_icon . esc_html($os) . ($os_version !== '' ? esc_html($os_version) : ''); ?>
 							</span>
@@ -49,18 +63,31 @@
 							</span>
 							<?php } ?>
 						</div>
+<?php } ?>
 
+
+						<?php
+						$argon_footer_show_filing = get_option('argon_footer_show_filing', 'true');
+						$argon_footer_icp = get_option('argon_footer_icp', '');
+						$argon_footer_gongan = get_option('argon_footer_gongan', '');
+						if ($argon_footer_show_filing != 'false' && ($argon_footer_icp != '' || $argon_footer_gongan != '')) {
+						?>
 						<div class="footer-filing-info" style="margin-bottom: 12px; font-size: 12.5px; display: flex; flex-wrap: wrap; justify-content: center; gap: 10px;">
+							<?php if ($argon_footer_icp != '') { ?>
 							<span style="background: rgba(127,127,127,0.06); border: 1px solid rgba(127,127,127,0.1); padding: 3px 10px; border-radius: 6px; display: inline-flex; align-items: center;">
-								🇨🇳 <a href="https://beian.miit.gov.cn/" target="_blank" style="color: inherit; text-decoration: none; margin-left: 6px;">京ICP备XXXX号-1</a>
+								🇨🇳 <a href="https://beian.miit.gov.cn/" target="_blank" style="color: inherit; text-decoration: none; margin-left: 6px;"><?php echo $argon_footer_icp; ?></a>
 							</span>
+							<?php } ?>
+							<?php if ($argon_footer_gongan != '') { ?>
 							<span style="background: rgba(127,127,127,0.06); border: 1px solid rgba(127,127,127,0.1); padding: 3px 10px; border-radius: 6px; display: inline-flex; align-items: center;">
-								🛡️ <a href="http://www.beian.gov.cn/portal/recordQuery" target="_blank" style="color: inherit; text-decoration: none; margin-left: 6px;">京公网安备XXXX号</a>
+								🛡️ <a href="http://www.beian.gov.cn/portal/recordQuery" target="_blank" style="color: inherit; text-decoration: none; margin-left: 6px;"><?php echo $argon_footer_gongan; ?></a>
 							</span>
+							<?php } ?>
 						</div>
+						<?php } ?>
 
 						<div style="font-size: 12px; opacity: 0.8; line-height: 1.6;">
-							<div>Copyright &copy; 2026 <strong style="color: var(--theme-color);">Yuhang</strong> . All Rights Reserved.</div>
+							<div>Copyright &copy; 2026 <strong style="color: var(--theme-color);"><?php echo get_option('argon_footer_copyright_name', 'Yuhang'); ?></strong> . All Rights Reserved.</div>
 							<div style="margin-top: 2px;">
 							Powered by <a href="https://wordpress.org" target="_blank" style="color: inherit;"><strong>WordPress</strong></a> &amp;
 							Theme <a href="https://github.com/Santiago-hang/Argon-Santiago" target="_blank" style="color: inherit;"><strong>Argon-Santiago</strong></a> (Based on <a href="https://github.com/solstice23/argon-theme" target="_blank" style="color: inherit;"><strong>Argon</strong></a>)
@@ -74,7 +101,12 @@
 
 		<script>
 			(function () {
-				var siteStart = new Date("1/28/2026 01:30:00");
+				var siteStartStr = "<?php echo esc_js(get_option('argon_footer_buildtime', '2026-01-01T00:00:00')); ?>";
+				// 后台按北京时间填写（无时区后缀），补 +08:00 让所有访客解析为同一绝对时刻
+				if (/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}$/.test(siteStartStr)) {
+					siteStartStr += "+08:00";
+				}
+				var siteStart = new Date(siteStartStr);
 				function showWebRuntime() {
 					var el = document.getElementById("web_runtime");
 					if (!el) return;

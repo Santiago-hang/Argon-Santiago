@@ -3354,41 +3354,28 @@ function argon_lookup_ip_location($ip, $use_transient = true){
 		}
 	}
 	$location = '未知(API错误)';
-	
-	// 【网易IP查询API】- 国内数据更准确
-	$api_url = 'https://ip.ws.126.net/ipquery?ip=' . rawurlencode($ip);
-	$response = wp_remote_get($api_url, array('timeout' => 1.5));
+
+	// 【唯一API】- ip-api.com (HTTP 免费档, 明文传输, 中文返回)
+	$api_url = 'http://ip-api.com/json/' . rawurlencode($ip) . '?lang=zh-CN';
+	$response = wp_remote_get($api_url, array('timeout' => 3));
 	if (!is_wp_error($response) && wp_remote_retrieve_response_code($response) == 200){
-		$body = wp_remote_retrieve_body($response);
-		// 解析返回格式：var lo="北京市"; var lc="海淀区";
-		if (preg_match('/var lo="([^"]+)"; var lc="([^"]+)"/', $body, $matches)){
-			$province = $matches[1];
-			$city = $matches[2];
-			if (!empty($city) && $province != $city){
-				$location = $province . ' ' . $city;
-			} else {
-				$location = $province;
-			}
-		}
-	}
-	
-	// 【备用API】- 如果网易API失败，回退到 ip-api.com
-	if ($location === '未知(API错误)'){
-		$api_url = 'https://ip-api.com/json/' . rawurlencode($ip) . '?lang=zh-CN';
-		$response = wp_remote_get($api_url, array('timeout' => 1.5));
-		if (!is_wp_error($response) && wp_remote_retrieve_response_code($response) == 200){
-			$data = json_decode(wp_remote_retrieve_body($response), true);
-			if ($data && isset($data['status']) && $data['status'] == 'success'){
-				$location = $data['regionName'];
-				if (!empty($data['city']) && $data['regionName'] != $data['city']){
-					$location .= ' ' . $data['city'];
-				}
+		$data = json_decode(wp_remote_retrieve_body($response), true);
+		if ($data && isset($data['status']) && $data['status'] == 'success'){
+			$location = $data['regionName'];
+			if (!empty($data['city']) && $data['regionName'] != $data['city']){
+				$location .= ' ' . $data['city'];
 			}
 		}
 	}
 	
 	if ($use_transient){
-		set_transient($cache_key, $location, DAY_IN_SECONDS);
+		if ($location === '' || $location === '未知(API错误)'){
+			// 查询失败：仅短期缓存，避免故障期狂打接口，也避免毒缓存一整天
+			set_transient($cache_key, $location, 5 * MINUTE_IN_SECONDS);
+		} else {
+			// 成功（含 '局域网'）：长期缓存
+			set_transient($cache_key, $location, DAY_IN_SECONDS);
+		}
 	}
 	return $location;
 }
@@ -3402,7 +3389,10 @@ function get_and_cache_ip_location($comment_id){
 		return $existing;
 	}
 	$location = argon_lookup_ip_location($comment -> comment_author_IP);
-	update_comment_meta($comment_id, 'ip_location', $location);
+	if ($location !== '' && $location !== '未知(API错误)'){
+		// 仅查询成功才写入，避免把失败值永久毒化数据库
+		update_comment_meta($comment_id, 'ip_location', $location);
+	}
 	return $location;
 }
 add_action('comment_post', 'get_and_cache_ip_location');

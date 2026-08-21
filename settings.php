@@ -927,11 +927,77 @@ function themeoptions_page(){
 						</td>
 					</tr>
 					<tr><th class="subtitle"><h2><?php _e('页脚', 'argon');?></h2></th></tr>
+					<tr><th class="subtitle"><h3><?php _e('页脚内容', 'argon');?></h3></th></tr>
 					<tr>
 						<th><label><?php _e('页脚内容', 'argon');?></label></th>
 						<td>
 							<textarea type="text" rows="15" cols="100" name="argon_footer_html"><?php echo htmlspecialchars(get_option('argon_footer_html')); ?></textarea>
 							<p class="description"><?php _e('HTML , 支持 script 等标签', 'argon');?></p>
+						</td>
+					</tr>
+					<tr><th class="subtitle"><h3><?php _e('底部信息条', 'argon');?></h3></th></tr>
+					<tr>
+						<th><label><?php _e('ICP 备案号', 'argon');?></label></th>
+						<td>
+							<input type="text" class="regular-text" name="argon_footer_icp" value="<?php echo get_option('argon_footer_icp'); ?>"/>
+							<p class="description"><?php _e('留空则不显示。例如：京ICP备2026027561号-1', 'argon');?></p>
+						</td>
+					</tr>
+					<tr>
+						<th><label><?php _e('公网安备号', 'argon');?></label></th>
+						<td>
+							<input type="text" class="regular-text" name="argon_footer_gongan" value="<?php echo get_option('argon_footer_gongan'); ?>"/>
+							<p class="description"><?php _e('留空则不显示。例如：京公网安备11010602202617号', 'argon');?></p>
+						</td>
+					</tr>
+					<tr>
+						<th><label><?php _e('建站时间', 'argon');?></label></th>
+						<td>
+							<input type="text" class="regular-text" name="argon_footer_buildtime" value="<?php echo get_option('argon_footer_buildtime'); ?>" placeholder="2026-01-01T00:00:00"/>
+							<p class="description"><?php _e('格式：2026-01-01T00:00:00（北京时间），用于页脚运行时间计时器起点。', 'argon');?></p>
+						</td>
+					</tr>
+					<tr>
+						<th><label><?php _e('版权所有者名称', 'argon');?></label></th>
+						<td>
+							<input type="text" class="regular-text" name="argon_footer_copyright_name" value="<?php echo get_option('argon_footer_copyright_name'); ?>"/>
+							<p class="description"><?php _e('页脚版权行显示的名称，默认 Yuhang。例如：宋宇航', 'argon');?></p>
+						</td>
+					</tr>
+					<tr>
+						<th><label><?php _e('显示备案信息', 'argon');?></label></th>
+						<td>
+							<div style="margin-top: 5px;">
+								<?php $argon_footer_show_filing = get_option('argon_footer_show_filing', 'true'); ?>
+								<label><input type="checkbox" name="argon_footer_show_filing" value="true" <?php if ($argon_footer_show_filing != 'false'){echo 'checked';}?>/> <?php _e('在页脚显示 ICP / 公网安备（需填写对应号码）', 'argon');?></label>
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<th><label><?php _e('显示运行时间', 'argon');?></label></th>
+						<td>
+							<div style="margin-top: 5px;">
+								<?php $argon_footer_show_runtime = get_option('argon_footer_show_runtime', 'true'); ?>
+								<label><input type="checkbox" name="argon_footer_show_runtime" value="true" <?php if ($argon_footer_show_runtime != 'false'){echo 'checked';}?>/> <?php _e('在页脚显示“本站已稳定运行”计时器', 'argon');?></label>
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<th><label><?php _e('显示访客统计', 'argon');?></label></th>
+						<td>
+							<div style="margin-top: 5px;">
+								<?php $argon_footer_show_visitor = get_option('argon_footer_show_visitor'); ?>
+								<label><input type="checkbox" name="argon_footer_show_visitor" value="true" <?php if ($argon_footer_show_visitor != 'false'){echo 'checked';}?>/> <?php _e('在页脚显示“访客 / 访问”统计', 'argon');?></label>
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<th><label><?php _e('显示设备和IP信息', 'argon');?></label></th>
+						<td>
+							<div style="margin-top: 5px;">
+								<?php $argon_footer_show_visitorinfo = get_option('argon_footer_show_visitorinfo'); ?>
+								<label><input type="checkbox" name="argon_footer_show_visitorinfo" value="true" <?php if ($argon_footer_show_visitorinfo != 'false'){echo 'checked';}?>/> <?php _e('在页脚显示系统、浏览器与 IP 地址信息', 'argon');?></label>
+							</div>
 						</td>
 					</tr>
 					<tr><th class="subtitle"><h2><?php _e('代码高亮', 'argon');?></h2></th></tr>
@@ -2245,6 +2311,14 @@ function argon_update_themeoptions(){
 
 		//公告
 		argon_update_option_allow_tags('argon_sidebar_announcement');
+		argon_update_option('argon_footer_icp');
+		argon_update_option('argon_footer_copyright_name');
+		argon_update_option('argon_footer_gongan');
+		argon_update_option('argon_footer_buildtime');
+		argon_update_option_checkbox('argon_footer_show_filing');
+		argon_update_option_checkbox('argon_footer_show_runtime');
+		argon_update_option_checkbox('argon_footer_show_visitor');
+		argon_update_option_checkbox('argon_footer_show_visitorinfo');
 	}
 }
 argon_update_themeoptions();
