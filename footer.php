@@ -27,7 +27,7 @@
 						$show_visitor = get_option('argon_footer_show_visitor', 'true') != 'false';
 						if ($show_runtime || $show_visitor) {
 						?>
-<div class="footer-uptime" style="margin-bottom: 8px; font-size: 12.5px; display: flex; flex-wrap: wrap; justify-content: center; gap: 8px;">
+<div class="footer-uptime" style="margin-bottom: 12px; font-size: 12.5px; display: flex; flex-wrap: wrap; justify-content: center; gap: 8px;">
 							<?php if ($show_runtime) { ?>
 							<span style="background: rgba(127,127,127,0.06); border: 1px solid rgba(127,127,127,0.1); padding: 3px 12px; border-radius: 12px; display: inline-block;">
 								⏱️ 本站已稳定运行：<span id="web_runtime" style="font-family: monospace; font-weight: 600;">载入中...</span>
@@ -86,9 +86,9 @@
 						</div>
 						<?php } ?>
 
-						<div style="font-size: 12px; opacity: 0.8; line-height: 1.6;">
+						<div style="font-size: 12px; opacity: 0.8;">
 							<div>Copyright &copy; 2026 <strong style="color: var(--theme-color);"><?php echo get_option('argon_footer_copyright_name', 'Yuhang'); ?></strong> . All Rights Reserved.</div>
-							<div style="margin-top: 2px;">
+							<div>
 							Powered by <a href="https://wordpress.org" target="_blank" style="color: inherit;"><strong>WordPress</strong></a> &amp;
 							Theme <a href="https://github.com/Santiago-hang/Argon-Santiago" target="_blank" style="color: inherit;"><strong>Argon-Santiago</strong></a> (Based on <a href="https://github.com/solstice23/argon-theme" target="_blank" style="color: inherit;"><strong>Argon</strong></a>)
 								<?php if (get_option('argon_hide_footer_author') != 'true') { echo " By Santiago"; } ?>
