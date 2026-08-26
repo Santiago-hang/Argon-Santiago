@@ -5292,3 +5292,25 @@ html.using-safari #blog_setting_card_radius_to_default:before {
 html.using-safari .friend-link-description:after {
         display: none;
 }
+
+/* 页脚小条统一规格：字号/高度/宽度/间距 + 修正假链接光标 */
+#footer .footer-visitor-info { gap: 8px; }
+#footer .footer-uptime > span,
+#footer .footer-filing-info > span,
+#footer .footer-visitor-badge {
+    font-size: 12.5px; line-height: 1.4; padding: 3px 10px; border-radius: 6px;
+}
+#footer .footer-visitor-badge.comment-useragent {
+    font-size: 12.5px; padding-left: 0; transform: none;
+}
+#footer .footer-visitor-badge svg,
+#footer .footer-visitor-badge > .fa {
+    width: 14px; height: 14px; font-size: 14px; line-height: 1;
+    margin: 0 4px 0 0; transform: none; vertical-align: middle; flex: 0 0 auto;
+}
+/* 页脚图标不可点击，禁用“假链接”手型光标 */
+#footer .footer-visitor-badge,
+#footer .footer-visitor-badge .fa,
+#footer .footer-visitor-badge svg {
+    cursor: url('https://yuhang.xyz/wp-content/themes/Argon-Santiago/assets/arrow.cur'), auto;
+}

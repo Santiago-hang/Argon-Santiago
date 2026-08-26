@@ -29,12 +29,12 @@
 						?>
 <div class="footer-uptime" style="margin-bottom: 12px; font-size: 12.5px; display: flex; flex-wrap: wrap; justify-content: center; gap: 8px;">
 							<?php if ($show_runtime) { ?>
-							<span style="background: rgba(127,127,127,0.06); border: 1px solid rgba(127,127,127,0.1); padding: 3px 12px; border-radius: 12px; display: inline-block;">
+							<span style="background: rgba(127,127,127,0.06); border: 1px solid rgba(127,127,127,0.1); padding: 3px 10px; border-radius: 6px; display: inline-block;">
 								⏱️ 本站已稳定运行：<span id="web_runtime" style="font-family: monospace; font-weight: 600;">载入中...</span>
 							</span>
 							<?php } ?>
 							<?php if ($show_visitor) { ?>
-							<span style="background: rgba(127,127,127,0.06); border: 1px solid rgba(127,127,127,0.1); padding: 3px 12px; border-radius: 12px; display: inline-flex; align-items: center;">
+							<span style="background: rgba(127,127,127,0.06); border: 1px solid rgba(127,127,127,0.1); padding: 3px 10px; border-radius: 6px; display: inline-flex; align-items: center;">
 								👥访客 <?php $stats = argon_get_visitor_stats(); echo number_format($stats['total_visitors']); ?>&nbsp;&nbsp;&nbsp;📊访问 <?php echo number_format($stats['total_views']); ?>
 							</span>
 							<?php } ?>
@@ -72,7 +72,7 @@
 						$argon_footer_gongan = get_option('argon_footer_gongan', '');
 						if ($argon_footer_show_filing != 'false' && ($argon_footer_icp != '' || $argon_footer_gongan != '')) {
 						?>
-						<div class="footer-filing-info" style="margin-bottom: 12px; font-size: 12.5px; display: flex; flex-wrap: wrap; justify-content: center; gap: 10px;">
+						<div class="footer-filing-info" style="margin-bottom: 12px; font-size: 12.5px; display: flex; flex-wrap: wrap; justify-content: center; gap: 8px;">
 							<?php if ($argon_footer_icp != '') { ?>
 							<span style="background: rgba(127,127,127,0.06); border: 1px solid rgba(127,127,127,0.1); padding: 3px 10px; border-radius: 6px; display: inline-flex; align-items: center;">
 								🇨🇳 <a href="https://beian.miit.gov.cn/" target="_blank" style="color: inherit; text-decoration: none; margin-left: 6px;"><?php echo $argon_footer_icp; ?></a>
